@@ -1,4 +1,5 @@
 from server.db_connector import DBConnector
+from server.model import Lectures
 
 db = DBConnector()
 
@@ -8,8 +9,8 @@ def lecture_test():
     db.cursor.execute(sql)
     lecture_list = db.cursor.fetchall()
     
-    print(lecture_list)
+    lectures = [Lectures(row).get_data_object()  for row in lecture_list]
     
     return{
-        '강의임시' : '임시',
+        'lectures' : lectures,
     }
