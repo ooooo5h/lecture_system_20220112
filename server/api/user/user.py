@@ -1,21 +1,28 @@
 # 로그인 / 회원가입 등 실제 사용자 정보 관련된 기능들을 모아두는 모듈
 # DB연결정보를 보관한 변수를 import하면 쉽게 쓰겠지?
+from re import I
 from server.db_connector import DBConnector
 from server.model import Users
 
 db = DBConnector()
 
-def test():
+
+# 로그인 기능
+def login(params):
+    sql = f"SELECT * FROM users WHERE email ='{params['email']}' AND password = '{params['pw']}'"
     
-    # DB의 모든 users를 조회하는 쿼리를 테스트로 날려보자
-    sql = f"SELECT * FROM users"
-    all_list = db.executeAll(sql)
+    login_user = db.executeOne(sql)   # 있다면 인스턴스가 있고, 없다면 None으로 나올 것
     
-    # 목록을 for문을 돌면서, 한 줄을 row로 추출하고, 추출된 row로 모델클래스로 가공해서 dict로 재가공을 한 줄로 마무리할 수 있음
-    # python for문을 list 내부를 돌면서 채워준다 => comprehension
-    all_users = [ Users(row).get_data_object()  for row in all_list]   
-    
+    if login_user is None :
+        return {
+            'code' : 400,
+            'message' : '이메일 or 비밀번호 오류',
+        }, 400
         
     return {
-        'users' : all_users,
+        'code' : 200,
+        'message' : '로그인 성공',
+        'data' : {
+            'user' : Users(login_user).get_data_object
+        }
     }
