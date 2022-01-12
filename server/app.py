@@ -4,7 +4,7 @@ from flask import Flask, request
 
 from server.db_connector import DBConnector
 
-from .api.user import login, sign_up
+from .api.user import login, sign_up, check_user_email
 from .api.lecture import lecture_test
 
 # DB연결 정보를 관리하는 클래스 생성해서, 객체를 변수에 담아두자
@@ -30,5 +30,11 @@ def create_app():
     @app.put("/user")
     def user_put():
         return sign_up(request.form.to_dict())
+    
+    
+    # 유저 이메일 확인 기능 주소 열어주기
+    @app.get("/user")
+    def user_get():
+        return check_user_email(request.args.to_dict())
     
     return app

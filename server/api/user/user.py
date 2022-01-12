@@ -50,3 +50,24 @@ def sign_up(params):
         'message' : '회원가입 성공2',
     }
     
+    
+# 이메일 조회 기능
+def check_user_email(params):
+    
+    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
+    
+    user_email_check_result = db.executeOne(sql)
+    
+    if user_email_check_result is None:
+        return {
+            'code' : 400,
+            'message' : '해당 이메일의 사용자는 존재하지 않습니다.',
+        }, 400
+        
+    return {
+        'code' : 200,
+        'message' : '해당 이메일 있음',
+        'data' : {
+            'user' : Users(user_email_check_result).get_data_object()
+        }
+    }
