@@ -15,3 +15,9 @@ class DBConnector:
         )
         
         self.cursor = self.db.cursor()
+        
+    
+    # 쿼리를 실행하고, 그에 대한 목록을 리턴하는 메쏘드 추가
+    def executeAll(self, sql):
+        self.cursor.execute(sql)
+        return self.cursor.fetchall()

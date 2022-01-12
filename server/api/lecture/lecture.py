@@ -6,8 +6,7 @@ db = DBConnector()
 def lecture_test():
     sql = 'SELECT * FROM lectures'
     
-    db.cursor.execute(sql)
-    lecture_list = db.cursor.fetchall()
+    lecture_list = db.executeAll(sql)
     
     lectures = [Lectures(row).get_data_object()  for row in lecture_list]
     
