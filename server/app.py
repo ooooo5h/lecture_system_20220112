@@ -16,7 +16,9 @@ def create_app():
     # 기본 로그인 기능 주소 열어주기
     @app.post("/user")
     def user_post():
-        return login(request.args.to_dict())
+        # args 변수에는 쿼리 파라미터에 들어있는 데이터들이 담겨있다
+        # 폼데이터에 담겨있는 데이터를 꺼내려면 form에 담아줘야 함
+        return login(request.form.to_dict())
 
 
     @app.post("/lecture")

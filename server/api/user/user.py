@@ -23,6 +23,6 @@ def login(params):
         'code' : 200,
         'message' : '로그인 성공',
         'data' : {
-            'user' : Users(login_user).get_data_object
+            'user' : Users(login_user).get_data_object()
         }
     }
