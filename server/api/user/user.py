@@ -30,7 +30,16 @@ def login(params):
 # 회원가입 기능
 def sign_up(params):
     
-    # 도전과제 : 이메일이 중복이면 가입 불허할 예정
+    ## 도전과제 1 : 회원가입시 중복된 이메일이면 400 처리
+    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
+    
+    email_check_result = db.executeOne(sql)
+    
+    if email_check_result :
+        return {
+            'code' : 400,
+            'message' : '중복된 이메일입니다.'
+        }, 400  
     
     sql = f"INSERT INTO users (email, password, name) VALUES ('{params['email']}', '{params['pw']}', '{params['name']}')"
     
@@ -38,6 +47,6 @@ def sign_up(params):
     
     return {
         'code' : 200,
-        'message' : '회원가입 성공',
+        'message' : '회원가입 성공2',
     }
     
