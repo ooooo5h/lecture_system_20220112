@@ -21,3 +21,9 @@ class DBConnector:
     def executeAll(self, sql):
         self.cursor.execute(sql)
         return self.cursor.fetchall()
+    
+    
+    # 쿼리를 실행하고, 한 줄만 리턴하는 메쏘드 추가
+    def executeOne(self, sql):
+        self.cursor.execute(sql)
+        return self.cursor.fetchone()
