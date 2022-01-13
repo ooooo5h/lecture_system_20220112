@@ -76,7 +76,6 @@ def modify_review(params):
     # user_id : 변경을 시도하는 사람이 누구인지 고유 번호
     # review_id : 변경해줄 리뷰의 id
     
-    
     # field라는 이름표로, 어느 항목을 바꾸고 싶은지 그 자체를 받아오자
     column_name = params['field']
     
@@ -93,7 +92,35 @@ def modify_review(params):
             'code' : 200,
             'message' : '제목 수정 성공'
         }
+        
+        
+    # 내용 변경
+    if column_name == 'content':
+        sql = f"UPDATE lecture_review SET content='{params['value']}' WHERE id = {params['review_id']}"
+        
+        db.cursor.execute(sql)
+        db.db.commit()
+        
+        return {
+            'code' : 200,
+            'message' : '내용 수정 성공',
+        }
     
+    
+    # 점수 변경
+    if column_name == 'score':
+        sql = f"UPDATE lecture_review SET score='{params['value']}' WHERE id = {params['review_id']}"
+        
+        db.cursor.execute(sql)
+        db.db.commit()
+        
+        return {
+            'code' : 200,
+            'message' : '점수 수정 성공',
+        }       
+    
+    # 여기까지 왔다는 건, field에 잘못된 값이 들어와서 수정하는 if문으로 못들어갔다     
     return {
-        '임시' : '리뷰 수정 기능 테스트'
-    }
+        'code' : 400,
+        'message' : '임마 필드에 값 잘못입력했어',
+    }, 400
