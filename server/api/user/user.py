@@ -46,27 +46,30 @@ def sign_up(params):
     
     return {
         'code' : 200,
-        'message' : '회원가입 성공2',
+        'message' : '회원가입 성공',
     }
     
     
 # 이메일 조회 기능
-def check_user_email(params):
+def find_user_by_email(params):
     
     sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
     
-    user_email_check_result = db.executeOne(sql)
+    find_user_email_result = db.executeOne(sql)
     
-    if user_email_check_result is None:
+    if find_user_email_result :
+        
+        found_user = Users(find_user_email_result)   
+        return {
+            'code' : 200,
+            'message' : '사용자 찾음',
+            'data' : {
+                'user' : found_user.get_data_object()
+            }
+        }
+    
+    else :   
         return {
             'code' : 400,
-            'message' : '해당 이메일의 사용자는 존재하지 않습니다.',
+            'message' : '해당 이메일의 사용자 없음',
         }, 400
-        
-    return {
-        'code' : 200,
-        'message' : '해당 이메일 있음',
-        'data' : {
-            'user' : Users(user_email_check_result).get_data_object()
-        }
-    }
