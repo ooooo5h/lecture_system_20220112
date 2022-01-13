@@ -12,7 +12,7 @@ def create_app():
       
     # API 로직 함수/클래스들은 create_app() 함수 내부에서만 필요
     from .api.user import login, sign_up, find_user_by_email
-    from .api.lecture import get_all_lectures, apply_lecture, cancel_apply, write_review
+    from .api.lecture import get_all_lectures, apply_lecture, cancel_apply, write_review, view_lecture_detail
     
     # 기본 로그인 기능 주소 열어주기
     @app.post("/user")
@@ -50,6 +50,12 @@ def create_app():
     @app.delete("/lecture")
     def lecture_delete():
         return cancel_apply(request.args.to_dict())
+    
+    
+    ## 특정 강의 상세 조회
+    @app.get("/lecture/<lecture_id>")
+    def lecture_detail(lecture_id):
+        return view_lecture_detail()
     
     
     ### 강의 리뷰 작성
