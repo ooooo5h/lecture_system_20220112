@@ -79,6 +79,33 @@ def modify_review(params):
     # field라는 이름표로, 어느 항목을 바꾸고 싶은지 그 자체를 받아오자
     column_name = params['field']
     
+    # 파라미터 검증
+    # 검증 0. 받아온 리뷰 아이디에 해당하는 리뷰가 진짜 있는 거야?!
+    sql = f"SELECT * FROM lecture_review WHERE id = {params['review_id']}"
+    
+    review_data = db.executeOne(sql)
+    if review_data is None:
+        return {
+            'code' : 400,
+            'message' : '해당 리뷰 없따구리'
+        }, 400
+        
+    # 검증 1. 수정하려는 리뷰 니가 쓴 거 맞아!?   
+    # >>>>> DB에서 가져온 user_id는 int형
+    # >>>>> 파라미터에서 가져온 user_id는 str형 (파라미터는 모든 데이터를 str로 가져옴)
+    # >>>>> 둘 다 int로 바꿔놓고 비교하자
+    if int(review_data['user_id']) != int(params['user_id']):   
+        
+        # print('리뷰 - user_id : ', review_data['user_id'])
+        # print('파라미터 - user_id : ', params['user_id'])
+        
+        # 남의 리뷰 수정하려는 상황 이자식 안돼!
+        return {
+            'code' : 400,
+            'message' : '니것만 수정하세요',
+        }, 400
+
+    
     # 제목 변경하구 싶니?
     if column_name == 'title':
         sql = f"UPDATE lecture_review SET title='{params['value']}' WHERE id = {params['review_id']} "
@@ -104,12 +131,22 @@ def modify_review(params):
         return {
             'code' : 200,
             'message' : '내용 수정 성공',
-        }
-    
+        } 
     
     # 점수 변경
     if column_name == 'score':
-        sql = f"UPDATE lecture_review SET score={params['value']} WHERE id = {params['review_id']}"
+        
+        # 파라미터로 들어온 점수가 1~5인지?
+        score = float(params['value'])
+        
+        # 검증 2. 점수 수정인 경우에도 입력값 1 ~ 5 사이 맞어!?
+        if not (1 <= score <= 5):
+            return {
+                'code' : 400,
+                'message' : '변경할 점수는 1 ~ 5 사이로 입력해',
+            }, 400
+        
+        sql = f"UPDATE lecture_review SET score={score} WHERE id = {params['review_id']}"
         
         db.cursor.execute(sql)
         db.db.commit()
