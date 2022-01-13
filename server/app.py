@@ -36,9 +36,9 @@ def create_app():
         return find_user_by_email(request.args.to_dict())
     
     
-    @app.post("/lecture")
-    def lecture_post():
-        return lecture_test()
-    
+    ## 모든 강의 목록 조회
+    @app.get("/lecture")
+    def lecture_get():
+        return get_all_lecture(request.args.to_dict())
     
     return app
