@@ -45,8 +45,7 @@ def create_app():
     ## 특정 강의 상세 조회
     @app.get("/lecture/<lecture_id>")    # /lecture/1   처럼, path방식의 주소를 작성하고 싶다
     def lecture_detail(lecture_id):
-        print(f"어떤 강의 보고싶니 {lecture_id}")
-        return view_lecture_detail()
+        return view_lecture_detail(lecture_id, request.args.to_dict())
     
         
     ## 수강 신청
