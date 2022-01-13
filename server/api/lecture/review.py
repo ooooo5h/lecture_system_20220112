@@ -38,6 +38,19 @@ def write_review(params):
             'message' : '수강신청해야지 리뷰 쓸 수 있다',
         }
         
+        
+    # 리뷰를 등록하기 전에, 이미 리뷰썼다면 못쓰게 막자
+    sql = f"SELECT * FROM lecture_review WHERE lecture_id={params['lecture_id']} AND user_id={params['user_id']}" 
+      
+    already_write_review_result = db.executeOne(sql)
+    
+    if already_write_review_result:
+        return {
+            'code' : 400,
+            'message' : '이미 리뷰 썼자나!'
+        }, 400
+           
+        
     # 실제 리뷰 등록
     sql = f"""
     INSERT INTO lecture_review 
