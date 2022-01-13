@@ -20,6 +20,11 @@ def write_review(params):
         }, 400
     
     # 3. 내용의 길이는 최소 10자 이상.
+    if len(params['content']) < 10:
+        return {
+        'code' : 400,
+        'message' : '내용 길이 10자 이상'
+    }, 400
 
     # DB내부 조회 결과 활용
     # 4. 수강을 했어야만 리뷰 작성 가능.
