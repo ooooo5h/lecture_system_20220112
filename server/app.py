@@ -4,14 +4,16 @@ from flask import Flask, request
 
 from server.db_connector import DBConnector
 
-from .api.user import login, sign_up, find_user_by_email
-from .api.lecture import lecture_test
-
 # DB연결 정보를 관리하는 클래스 생성해서, 객체를 변수에 담아두자
-# db = DBConnector()
+db = DBConnector()
 
 def create_app():
     app = Flask(__name__)
+    
+    # API로직 함수,클래스들은 create_app 함수 내에서만 필요함
+    # 함수 내부에서 import를 실행하도록 구조를 변경함 => 순환참조를 피해서 정상동작할 수 있게 유도함
+    from .api.user import login, sign_up, find_user_by_email
+    from .api.lecture import get_all_lecture
     
     # 기본 로그인 기능 주소 열어주기
     @app.post("/user")
