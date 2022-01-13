@@ -1,3 +1,6 @@
+from audioop import avg
+
+
 class Lectures:
     
     def __init__(self, data_dict):
@@ -10,7 +13,7 @@ class Lectures:
 
     # 리뷰 목록이 추가된다면 강의의 하위 데이터로 reviews:[]를 추가해보자
     # 기본값 : None => 리뷰를 다루지 않는 경우(전체 강의 목록 불러내기)도 대응하기 위해서        
-    def get_data_object(self, reviews=None):    
+    def get_data_object(self, reviews=None, avg_score=None):    
         
         # data { } => dict를 만드는 행위    
         
@@ -28,13 +31,16 @@ class Lectures:
             data['reviews'] = reviews
             
             # 모든 리뷰의 평점을 가지고 평균점수를 구해보자
-            sum_score = 0
+            # sum_score = 0
             
-            for review in reviews:
-                sum_score += review['score']
+            # for review in reviews:
+            #     sum_score += review['score']
                 
-            avg_score = sum_score / len(reviews)
+            # avg_score = sum_score / len(reviews)
             
-            data['avg_score'] = avg_score   
+            # data['avg_score'] = avg_score   
+            
+        if avg_score :
+            data['avg_score'] = avg_score
                 
         return data
