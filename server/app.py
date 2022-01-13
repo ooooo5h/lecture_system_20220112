@@ -20,11 +20,6 @@ def create_app():
         # args 변수에는 쿼리 파라미터에 들어있는 데이터들이 담겨있다
         # 폼데이터에 담겨있는 데이터를 꺼내려면 form에 담아줘야 함
         return login(request.form.to_dict())
-
-
-    @app.post("/lecture")
-    def lecture_post():
-        return get_all_lectures()
     
     
     # 회원가입 기능 주소 열어주기
@@ -37,5 +32,11 @@ def create_app():
     @app.get("/user")
     def user_get():
         return find_user_by_email(request.args.to_dict())
+    
+    
+    ## 모든 강의 목록 조회
+    @app.get("/lecture")
+    def lecture_get():
+        return get_all_lectures(request.args.to_dict())
     
     return app
