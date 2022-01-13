@@ -75,6 +75,20 @@ def modify_review(params):
     
     column_name = params['field']
     
+    # 파라미터 검증을 해보자
+    # 검증 0 : 받아온 리뷰 아이디에 해당하는 리뷰가 실존해?
+    sql = f"SELECT * FROM lecture_review WHERE id={params['review_id']}"
+    
+    review_data = db.executeOne(sql)
+    
+    if review_data == None:
+        return{
+            'code' : 400,
+            'message' : '해당 리뷰는 존재하지 않습니다.'    
+        }, 400
+    
+    
+    
     #1. 제목 변경
     if column_name == 'title':
         sql = f"UPDATE lecture_review SET title = '{params['value']}' WHERE id = {params['review_id']}"
