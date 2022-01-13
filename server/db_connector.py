@@ -29,7 +29,7 @@ class DBConnector:
         return self.cursor.fetchone()
     
     
-    # 하나의 데이터를 추가하고, 바로 DB에 기록하는 메쏘드 추가
-    def insertAndCommit(self, sql):
+    # 하나의 데이터를 추가/변경/삭제 등 DB에 영향주는 쿼리를 실행하고, 바로 DB에 기록하는 메쏘드 추가
+    def executeQueryAndCommit(self, sql):
         self.cursor.execute(sql)
         self.db.commit()    # return이 없는 이유? commit()은 결과값 자체가 없어서 return을 안해도 함수가 끝남

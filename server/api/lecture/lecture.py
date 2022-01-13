@@ -37,7 +37,7 @@ def apply_lecture(params):
     
     sql = f"INSERT INTO lecture_user VALUES ({params['lecture_id']}, {params['user_id']})"
     
-    db.insertAndCommit(sql)
+    db.executeQueryAndCommit(sql)
     
     return {
         'code' : 200,

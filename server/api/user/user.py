@@ -40,7 +40,7 @@ def sign_up(params):
     
     sql = f"INSERT INTO users (email, password, name) VALUES ('{params['email']}', '{params['pw']}', '{params['name']}')"
     
-    db.insertAndCommit(sql)
+    db.executeQueryAndCommit(sql)
     
     return {
         'code' : 200,
