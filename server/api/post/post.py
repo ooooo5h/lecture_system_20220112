@@ -20,11 +20,13 @@ def add_post(params):
         '임시' : '게시글 등록',
     }
     
+    
 # 게시글 수정
 def modify_post(params):
     return {
         '임시' : '게시글 수정',
     }
+    
     
 # 게시글 삭제
 def delete_post(params):

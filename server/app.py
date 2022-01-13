@@ -1,5 +1,6 @@
 # 플라스크 자체를 로딩
 
+from audioop import add
 from flask import Flask, request
 
 from server.db_connector import DBConnector
@@ -14,6 +15,7 @@ def create_app():
     # 함수 내부에서 import를 실행하도록 구조를 변경함 => 순환참조를 피해서 정상동작할 수 있게 유도함
     from .api.user import login, sign_up, find_user_by_email
     from .api.lecture import get_all_lecture, apply_lecture, cancel_apply, write_review, view_lecture_detail, modify_review
+    from .api.post import get_all_posts, view_post, add_post, modify_post, delete_post 
     
     # 기본 로그인 기능 주소 열어주기
     @app.post("/user")
@@ -73,13 +75,33 @@ def create_app():
     
     
     ### 모든 게시글 조회
+    @app.get("/post")
+    def post_get():
+        return get_all_posts(request.args.to_dict())
+    
     
     ### 특정 게시글 상세 조회(게시글 하나만 리턴 - 향후에는 댓글 목록을 하위 데이터로 내려주기)
+    @app.get("/post/<post_id>")
+    def post_get_detail(post_id):
+        return view_lecture_detail(post_id, request.args.to_dict())
+    
     
     ### 게시글 등록
+    @app.post("/post")
+    def post_post():
+        return add_post(request.form.to_dict())  
+    
     
     ### 게시글 수정
+    @app.put("/post")
+    def post_put():
+        return modify_post(request.form.to_dict())
+    
     
     ### 게시글 삭제
+    @app.delete("/post")
+    def post_delete():
+        return delete_post(request.args.to_dict())
+    
     
     return app
