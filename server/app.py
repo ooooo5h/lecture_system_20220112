@@ -4,14 +4,15 @@ from flask import Flask, request
 
 from server.db_connector import DBConnector
 
-from .api.user import login, sign_up, find_user_by_email
-from .api.lecture import lecture_test
-
 # DB연결 정보를 관리하는 클래스 생성해서, 객체를 변수에 담아두자
-# db = DBConnector()
+db = DBConnector()
 
 def create_app():
     app = Flask(__name__)
+      
+    # API 로직 함수/클래스들은 create_app() 함수 내부에서만 필요
+    from .api.user import login, sign_up, find_user_by_email
+    from .api.lecture import get_all_lectures
     
     # 기본 로그인 기능 주소 열어주기
     @app.post("/user")
@@ -23,7 +24,7 @@ def create_app():
 
     @app.post("/lecture")
     def lecture_post():
-        return lecture_test()
+        return get_all_lectures()
     
     
     # 회원가입 기능 주소 열어주기

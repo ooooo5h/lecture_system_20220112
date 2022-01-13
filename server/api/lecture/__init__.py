@@ -1,1 +1,1 @@
-from .lecture import lecture_test
+from .lecture import get_all_lectures
