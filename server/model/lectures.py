@@ -26,5 +26,15 @@ class Lectures:
         # 만약에 reviews 파라미터에 실제 데이터가 들어왔다면, 추가해주자
         if reviews :
             data['reviews'] = reviews
+            
+            # 모든 리뷰의 평점을 가지고 평균점수를 구해보자
+            sum_score = 0
+            
+            for review in reviews:
+                sum_score += review['score']
+                
+            avg_score = sum_score / len(reviews)
+            
+            data['avg_score'] = avg_score   
                 
         return data
