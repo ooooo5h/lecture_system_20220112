@@ -12,8 +12,13 @@ def write_review(params):
             'message' : '1~5사이 평점 입력'
         }, 400
 
-    # 2. 제목의 길이는 최소 5자 이상.
-
+    # 2. 제목의 길이는 최소 5자 이상.    
+    if len(params['title']) < 5:
+        return {
+            'code' : 400,
+            'message' : '제목 길이 5자 이상'
+        }, 400
+    
     # 3. 내용의 길이는 최소 10자 이상.
 
     # DB내부 조회 결과 활용
