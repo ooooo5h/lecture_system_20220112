@@ -4,13 +4,43 @@ from server import db
 
 def write_review(params):
     
-    # 1 : 평점은 1~5점 사이로만 가능 ( 파라미터가 제대로 들어오는가 검증이 우선)
+    # 1 : 평점은 1~5점 사이로만 가능
+    # 파라미터들은 기본적으로 str형태로 들어오기 때문에, float로 먼저 변환해두고 사용하자   
+    score = float(params['score'])   
+    if not (1 <= score <= 5):
+        return {
+            'code' : 400,
+            'message' : '평점은 1 ~ 5점 사이여야 합니다.'
+        }, 400
     
-    # 2 : 제목의 길이는 최소 5글자 이상 ( 파라미터가 제대로 들어오는가 검증이 우선)
+    # 2 : 제목의 길이는 최소 5글자 이상
+    # => str의 길이, 파라미터 자체의 길이를 체크하면 됨    
+    if len(params['title']) < 5 :
+        return {
+            'code' : 400,
+            'message' : '제목은 최소 5글자 이상 입력하세요.',
+        }, 400
+      
+    # 3 : 내용의 길이는 최소 10자 이상
+    if len(params['content']) < 10 :
+        return {
+        'code' : 400,
+        'message' : '내용은 최소 10글자 이상 입력하세요.',
+    }, 400
     
-    # 3 : 내용의 길이는 최소 10자 이상 ( 파라미터가 제대로 들어오는가 검증이 우선)
+
+    # 4 : 수강을 했어야지만 리뷰 작성 가능 
+    # ( DB 내부 조회 결과 활용)
+    sql = f"SELECT * FROM lecture_user WHERE lecture_id = {params['lecture_id']} AND user_id = {params['user_id']}"
     
-    # 4 : 수강을 했어야지만 리뷰 작성 가능 ( DB 내부 조회 결과 활용)
+    query_result = db.executeOne(sql)
+    
+    if not query_result :
+        # 수강 신청 안해놓고 리뷰 작성하려는 케이스
+        return {
+            'code' : 400,
+            'message' : '수강신청부터 하렴. 수강신청 안해서 리뷰작성 모태'
+        }, 400
     
     # 리뷰 실제 등록
     return {
