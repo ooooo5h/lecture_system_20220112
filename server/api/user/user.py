@@ -50,4 +50,11 @@ def sign_up(params):
         'code' : 200,
         'message' : '회원가입 성공',
     }
+
+# 이메일을 받아서 사용자 정보를 조회하는 기능
+def find_user_by_email(params):
     
+    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
+    return {
+        '임시' : '임시~'
+    }
