@@ -83,7 +83,7 @@ def create_app():
     ### 특정 게시글 상세 조회(게시글 하나만 리턴 - 향후에는 댓글 목록을 하위 데이터로 내려주기)
     @app.get("/post/<post_id>")
     def post_get_detail(post_id):
-        return view_lecture_detail(post_id, request.args.to_dict())
+        return view_post(post_id, request.args.to_dict())
     
     
     ### 게시글 등록
