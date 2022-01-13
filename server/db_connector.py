@@ -30,6 +30,6 @@ class DBConnector:
     
     
     # 하나의 데이터를 추가하고, 바로 DB에 기록하는 메쏘드 추가
-    def insetAndCommit(self, sql):
+    def insertAndCommit(self, sql):
         self.cursor.execute(sql)
         self.db.commit()    # return이 없는 이유? commit()은 결과값 자체가 없어서 return을 안해도 함수가 끝남
