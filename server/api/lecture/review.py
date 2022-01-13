@@ -28,11 +28,12 @@ def write_review(params):
 
     # DB내부 조회 결과 활용
     # 4. 수강을 했어야만 리뷰 작성 가능.
-
-
-    # 리뷰 실제 등록
+    sql = f"SELECT * FROM lecture_user WHERE lecture_id = {params['lecture_id']} AND user_id = {params['user_id']}"
     
+    apply_class_result = db.executeOne(sql)
     
-    return {
-        'code' : '강의 리뷰 테스트',
-    }
+    if not apply_class_result:
+        return {
+            'code' : 400,
+            'message' : '수강신청해야지 리뷰 쓸 수 있다',
+        }
