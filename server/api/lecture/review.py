@@ -40,7 +40,18 @@ def write_review(params):
         return {
             'code' : 400,
             'message' : '수강신청부터 하렴. 수강신청 안해서 리뷰작성 모태'
-        }, 400
+        }, 400        
+        
+    # 5 : 이미 리뷰를 작성했다면, 추가 리뷰 작성 불가하게 막자
+    sql = f"SELECT * FROM lecture_review WHERE lecture_id = {params['lecture_id']} AND user_id = {params['user_id']}"    
+        
+    already_write_review = db.executeOne(sql)
+    
+    if already_write_review :
+        return {
+            'code' : 400,
+            'message' : '이미 작성했으면 또 작성 모태',
+        }, 400   
     
     # 리뷰 실제 등록
     sql = f"""
@@ -52,5 +63,6 @@ def write_review(params):
     db.insertAndCommit(sql)
     
     return {
-        '임시' : '강의 리뷰 작성',
+        'code' : 200,
+        'message' : '리뷰 등록 성공!',
     }
