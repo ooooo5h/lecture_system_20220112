@@ -44,3 +44,29 @@ def apply_lecture(params):
         'code' : 200,
         'message' : '수강신청 성공'
     }
+    
+    
+# 수강 취소 기능
+def cancel_apply(params):
+    
+    # 수강 신청 안한 과목은 취소 불가 400 처리
+    sql =f"SELECT * FROM lecture_user WHERE user_id = {params['user_id']} AND lecture_id = {params['lecture_id']}"
+    
+    already_apply_lecture_result = db.executeOne(sql)
+    
+    if not already_apply_lecture_result:
+        return {
+            'code' : 400,
+            'message' : '수강 신청 안한 과목은 취소 불가'
+        }, 400  
+    
+    # 실제 신청 내역 삭제. (쿼리 매우 유의)
+    sql = f"DELETE FROM lecture_user WHERE user_id = {params['user_id']} AND lecture_id = {params['lecture_id']} "
+    
+    db.cursor.execute(sql)
+    db.db.commit()
+    
+    return {
+        'code' : 200,
+        'message' : '수강 취소 성공'
+    }
