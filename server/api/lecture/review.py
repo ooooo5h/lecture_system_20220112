@@ -37,3 +37,16 @@ def write_review(params):
             'code' : 400,
             'message' : '수강신청해야지 리뷰 쓸 수 있다',
         }
+        
+    # 실제 리뷰 등록
+    sql = f"""
+    INSERT INTO lecture_review 
+    (lecture_id, user_id, title, content, score) 
+    VALUES 
+    ({params['lecture_id']},{params['user_id']},'{params['title']}','{params['content']}', {score}) 
+    """
+    
+    return{
+        'code' : 200,
+        'message' : '리뷰 등록 성공'
+    }
