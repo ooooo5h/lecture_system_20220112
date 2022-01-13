@@ -100,3 +100,4 @@ def view_lecture_detail(id, params):
             'lecture' : lecture.get_data_object(reviews=review_list),
         }
     }
+    
