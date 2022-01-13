@@ -87,6 +87,31 @@ def modify_review(params):
             'message' : '제목을 수정했습니다.',
         }
     
+    #2. 내용 변경
+    if column_name == 'content':
+        sql = f"UPDATE lecture_review SET content='{params['value']}' WHERE id = {params['review_id']}"
+        db.cursor.execute(sql)
+        db.db.commit()
+
+        return {
+            'code': 200,
+            'message': '내용을 수정했습니다.'
+        }
+        
+    #3. 점수 변경
+    if column_name == 'score':
+        sql = f"UPDATE lecture_review SET score={params['value']} WHERE id = {params['review_id']}"
+
+        db.cursor.execute(sql)
+        db.db.commit()
+
+        return {
+            'code': 200,
+            'message': '점수를 수정했습니다.'
+        }
+   
+    # 여기까지 내려왔다? field 파라미터에 잘못된값이 들어갔으므로 -> 수정 분기로 들어가지 않았다.
     return {
-        '임시' : '리뷰 수정 기능',
-    }
+        'code': 400,
+        'message': 'field에 잘못된 값이 입력되었습니다.'
+    }, 400 
