@@ -109,7 +109,7 @@ def modify_review(params):
     
     # 점수 변경
     if column_name == 'score':
-        sql = f"UPDATE lecture_review SET score='{params['value']}' WHERE id = {params['review_id']}"
+        sql = f"UPDATE lecture_review SET score={params['value']} WHERE id = {params['review_id']}"
         
         db.cursor.execute(sql)
         db.db.commit()
