@@ -31,6 +31,16 @@ def login(params):
 def sign_up(params):
     
     # 도전과제 : 이메일이 중복이면 가입 불허할 예정
+    sql = f"SELECT * FROM users WHERE email = '{params['email']}'"
+    
+    already_user_data = db.executeOne(sql)
+    
+    # 이미 가입한 사람이 있다면 400으로 중복처리
+    if already_user_data :
+        return {
+            'code' : 400,
+            'message' : '이미 사용중인 이메일',
+        }, 400
     
     sql = f"INSERT INTO users (email, password, name) VALUES ('{params['email']}', '{params['pw']}', '{params['name']}')"
     
