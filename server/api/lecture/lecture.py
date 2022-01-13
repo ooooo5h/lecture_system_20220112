@@ -77,7 +77,21 @@ def cancel_apply(params):
     
 # 특정 강의 상세보기
 def view_lecture_detail(id, params):
+    
+    # 1 : 강의 자체에 대한 정보 조회
+    sql = f"SELECT * FROM lectures WHERE id = {id}"
+    
+    lecture_data = db.executeOne(sql)
+    
+    lecture = Lectures(lecture_data)
+    
+    # 2 : 강의에 대한 모든 리뷰 점수의 평균을 추가로 조회
+    # 3 : 모든 리뷰 내역을 추가로 첨부
+    
     return {
-        '임시' : '강의 상세 조회',
-        
+        'code' : 200,
+        'message' : '강의 상세 조회',
+        'data' : {
+            'lecture' : lecture.get_data_object()
+        }
     }
