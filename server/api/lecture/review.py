@@ -43,6 +43,14 @@ def write_review(params):
         }, 400
     
     # 리뷰 실제 등록
+    sql = f"""
+    INSERT INTO lecture_review
+    (lecture_id, user_id, title, content, score)
+    VALUES ({params['lecture_id']}, {params['user_id']}, '{params['title']}', '{params['content']}', {params['score']})
+    """
+    
+    db.insertAndCommit(sql)
+    
     return {
         '임시' : '강의 리뷰 작성',
     }
