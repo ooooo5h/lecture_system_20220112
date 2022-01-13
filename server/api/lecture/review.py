@@ -87,6 +87,12 @@ def modify_review(params):
             'message' : '해당 리뷰는 존재하지 않습니다.'    
         }, 400
     
+    # 검증 1: 수정하려는 리뷰가 본인이 작성한 리뷰가 맞아?
+    if int(review_data['user_id']) != int(params['user_id']) :
+        return {
+            'code' : 400,
+            'message' : '본인이 작성한 리뷰만 수정하세요.'
+        }, 400
     
     
     #1. 제목 변경
