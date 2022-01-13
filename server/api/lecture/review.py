@@ -66,6 +66,27 @@ def write_review(params):
     
 # 강의 수정하는 기능
 def modify_review(params):
+    
+    # 파라미터 정리 
+    # field : 어느 항목을 바꿀 지 알려주는 역할
+    # value : 해당 항목에 실제로 넣어줄 값
+    # user_id : 변경을 시도하는 사람이 누구인지?
+    # review_id : 변경해줄 리뷰의 id
+    
+    column_name = params['field']
+    
+    #1. 제목 변경
+    if column_name == 'title':
+        sql = f"UPDATE lecture_review SET title = '{params['value']}' WHERE id = {params['review_id']}"
+        
+        db.cursor.execute(sql)
+        db.db.commit()
+        
+        return {
+            'code' : 200,
+            'message' : '제목을 수정했습니다.',
+        }
+    
     return {
         '임시' : '리뷰 수정 기능',
     }
