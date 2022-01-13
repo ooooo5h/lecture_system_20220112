@@ -1,4 +1,3 @@
-from turtle import screensize
 from server import db
 
 def write_review(params):

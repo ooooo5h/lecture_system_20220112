@@ -19,5 +19,5 @@ class Reviews:
             'score': self.score,
             'created_at': str(self.created_at),
             }
-        
+            
         return data
