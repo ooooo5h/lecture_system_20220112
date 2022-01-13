@@ -120,6 +120,16 @@ def modify_review(params):
         
     #3. 점수 변경
     if column_name == 'score':
+        
+        # 검증 2 : 점수 수정할 때 입력한 값이 1~ 5 사이야?
+        score = float(params['value'])
+        
+        if not (1<= score <= 5):
+            return{
+                'code' : 400,
+                'message' : '1~5 사이로 수정하세요.'
+            }, 400
+            
         sql = f"UPDATE lecture_review SET score={params['value']} WHERE id = {params['review_id']}"
 
         db.cursor.execute(sql)
