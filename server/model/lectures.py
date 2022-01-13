@@ -31,7 +31,7 @@ class Lectures:
 
             avg_score = sum_score / len(reviews)          
             
-            data['avg_score'] = avg_score  
+            data['avg_score'] = round(avg_score, 2)
             
         
         return data
