@@ -55,7 +55,7 @@ def create_app():
     ## 특정 강의 상세 조회
     @app.get("/lecture/<lecture_id>")
     def lecture_detail(lecture_id):
-        return view_lecture_detail()
+        return view_lecture_detail(lecture_id, request.args.to_dict())
     
     
     ### 강의 리뷰 작성

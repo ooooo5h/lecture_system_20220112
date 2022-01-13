@@ -73,7 +73,7 @@ def cancel_apply(params):
     
 
 # 특정 강의 상세보기
-def view_lecture_detail():
+def view_lecture_detail(id, params):
     return{
         '임시' : '강의 상세 조회'
     }
