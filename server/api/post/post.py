@@ -70,12 +70,26 @@ def modify_post(params):
 def delete_post(params):
     
     # 파라미터 검증하고 본인이 쓴 글이 맞는지 + 지우려는 글이 실존하는지?
+    sql = f"SELECT * FROM posts WHERE id = {params['post_id']}"
+    
+    post_data = db.executeOne(sql)
+    if post_data is None:
+        return {
+            'code' : 400,
+            'message' : '없는 글인걸? 뭘 지운다는 거야'
+        }, 400
+        
+    if post_data['user_id'] != int(params['user_id']) :
+        return {
+            'code' : 400,
+            'message' : '니글만 삭제하세여',
+        }, 400
     
     sql = f"DELETE FROM posts WHERE id = {params['post_id']}"
     
     db.executeQueryAndCommit(sql)
     
- 
     return {
+        'code' : 200,
         'message' : '게시글 삭제',
     }
