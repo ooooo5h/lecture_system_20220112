@@ -21,8 +21,17 @@ def get_all_posts(params):
     
 # 특정 게시글 상세 조회 : GET /post/5
 def view_post(post_id, params):
+    
+    sql = f"SELECT * FROM posts WHERE id = {post_id}"
+ 
+    post_data = db.executeOne(sql)   
+    
     return {
-        '임시' : '특정 게시글 상세 조회',
+        'code' : 200,
+        'message' : '특정 게시글 상세 조회',
+        'data' : {
+            'post' : Posts(post_data).get_data_object()
+        }
     }
     
     
