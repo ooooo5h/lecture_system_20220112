@@ -43,3 +43,11 @@ def apply_lecture(params):
         'code' : 200,
         'message' : '수강 신청을 성공!',
     }
+    
+
+# 수강 취소 기능
+def cancel_apply(params):
+    
+    return {
+        '임시' : '수강 취소 기능',
+    }
