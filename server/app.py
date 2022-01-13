@@ -71,4 +71,15 @@ def create_app():
     def review_patch():
         return modify_review(request.form.to_dict())
     
+    
+    ### 모든 게시글 조회
+    
+    ### 특정 게시글 상세 조회(게시글 하나만 리턴 - 향후에는 댓글 목록을 하위 데이터로 내려주기)
+    
+    ### 게시글 등록
+    
+    ### 게시글 수정
+    
+    ### 게시글 삭제
+    
     return app
